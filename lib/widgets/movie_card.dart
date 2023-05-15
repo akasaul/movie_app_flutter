@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import '../models/movie.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key});
+  final Movie movie;
+
+  const MovieCard({
+    super.key,
+    required this.movie,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class MovieCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Image.network(
-                    'https://resize.indiatvnews.com/en/resize/newbucket/730_-/2022/11/john-wick-1668095706.jpg',
+                    'https://image.tmdb.org/t/p/original/${movie.posterPath}',
                     fit: BoxFit.cover,
                     loadingBuilder: (ctx, child, chunk) => Container(
                       color: Colors.red,
@@ -45,14 +51,14 @@ class MovieCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 2),
                           Text(
-                            '8.9',
+                            movie.rating,
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Hurawatch | John',
+                        movie.title,
                         maxLines: 1,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.labelSmall,

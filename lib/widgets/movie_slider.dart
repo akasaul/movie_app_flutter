@@ -20,7 +20,8 @@ class _MovieSliderState extends State<MovieSlider> {
       child: Stack(
         children: [
           FutureBuilder(
-            future: Provider.of<MoviesProvider>(context).fetchAndSetMovies(),
+            future: Provider.of<MoviesProvider>(context, listen: false)
+                .fetchAndSetPopularMovies(),
             builder: (ctx, snapshot) => Consumer<MoviesProvider>(
               builder: (ctx, moviesProvider, child) => PageView.builder(
                   pageSnapping: true,
@@ -29,7 +30,7 @@ class _MovieSliderState extends State<MovieSlider> {
                           cur = curIndex;
                         })
                       },
-                  itemCount: 5,
+                  itemCount: moviesProvider.movies.length,
                   itemBuilder: (ctx, index) => MovieSliderSingle(
                       movie: moviesProvider.movies.elementAt(index))),
             ),

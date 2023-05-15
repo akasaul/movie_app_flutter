@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../models/movie.dart';
+import '../repository/movies_repo.dart';
 
 class MoviesProvider with ChangeNotifier {
-  List<Movie> movies = [];
+  List<Movie> _movies = [];
+  MoviesRepository movieRepo = MoviesRepository();
 
-  Future<void> fetchAndSetMovies() async {
-    Uri url = Uri.https(
-      'api.themoviedb.org',
+  List<Movie> get movies {
+    return List.unmodifiable(_movies);
+  }
+
+  Future<void> fetchAndSetPopularMovies() async {
+    _movies = await movieRepo.fetchMovies(
       '3/movie/popular',
       {
         'language': 'en-US',
         'page': '1',
       },
-    );
+    ) as List<Movie>;
+    notifyListeners();
+  }
 
-    try {
-      final res = await http.get(url, headers: {
-        'accept': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZGY5ZjEwMzdkN2YzNzhhMWMxYzk0YjY1Y2VhOThkNCIsInN1YiI6IjYzOWFiOTExOGEwZTliMDA4YWY3NTcwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQkN6XFyQHRrHKj3TI2XDbJ-bnN3FIUhlg56CxJBHXs'
-      });
+  Future<List<Movie>> fetchTrendingMovies() async {
+    final trendingMovies = await movieRepo.fetchMovies('3/trending/movie/day', {
+      'language': 'en-US',
+    });
+    return trendingMovies as List<Movie>;
+  }
 
-      final resFormatted = (json.decode(res.body));
+  Future<List<Movie>> fetchTrendingTv() async {
+    final trendingMovies = await movieRepo.fetchMovies('3/trending/tv/day', {
+      'language': 'en-US',
+    });
 
-      if (resFormatted['results'].length > 0) {
-        movies = List<Movie>.from(resFormatted['results']
-            .map((movie) => Movie(
-                  title: movie['original_title'],
-                  id: movie['id'],
-                  genreIds: movie['genre_ids'],
-                  rating: movie['vote_average'].toString(),
-                  posterPath: movie['poster_path'],
-                ))
-            .toList());
-
-        notifyListeners();
-      }
-    } catch (err) {
-      print(err);
-    }
+    print(trendingMovies);
+    return trendingMovies as List<Movie>;
   }
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nikoflex_movie_app/models/movie.dart';
+import 'package:nikoflex_movie_app/widgets/movie_grid.dart';
+import 'package:nikoflex_movie_app/widgets/moviesSection.dart';
+import 'package:provider/provider.dart';
 import '../widgets/movie_slider.dart';
-import '../widgets/movie_grid.dart';
 import '../widgets/button.dart';
+import '../providers/movies_provider.dart';
 
 class Home extends StatelessWidget {
   final String title;
@@ -46,12 +50,7 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            MovieGrid(
-              sectionTitle: 'Trending',
-            ),
-            MovieGrid(
-              sectionTitle: 'Trending',
-            ),
+            MoviesSection(),
           ],
         ),
       ),
