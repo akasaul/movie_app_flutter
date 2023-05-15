@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../widgets/movie_slider_single.dart';
+import '../providers/movies_provider.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
   MovieSlider({super.key});
 
-  final carousel = [
-    MovieSliderSingle(
-      imageUrl:
-          'https://resize.indiatvnews.com/en/resize/newbucket/730_-/2022/11/john-wick-1668095706.jpg',
-    ),
-    MovieSliderSingle(
-      imageUrl:
-          'https://s.yimg.com/ny/api/res/1.2/NShuU3coiFRZ3.Egqvyfpw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYzODtjZj13ZWJw/https://media.zenfs.com/en/homerun/feed_manager_auto_publish_494/27de58fc6b09e916c81a3faf061550de',
-    ),
-    MovieSliderSingle(
-      imageUrl:
-          'https://resize.indiatvnews.com/en/resize/newbucket/730_-/2022/11/john-wick-1668095706.jpg',
-    ),
-    MovieSliderSingle(
-      imageUrl:
-          'https://s.yimg.com/ny/api/res/1.2/NShuU3coiFRZ3.Egqvyfpw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYzODtjZj13ZWJw/https://media.zenfs.com/en/homerun/feed_manager_auto_publish_494/27de58fc6b09e916c81a3faf061550de',
-    ),
-  ];
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+  int cur = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +19,19 @@ class MovieSlider extends StatelessWidget {
       height: 300,
       child: Stack(
         children: [
-          PageView.builder(
-            onPageChanged: (curIndex) => {print(curIndex)},
-            itemCount: carousel.length,
-            itemBuilder: (ctx, index) => MovieSliderSingle(
-              imageUrl: carousel[index].imageUrl,
+          FutureBuilder(
+            future: Provider.of<MoviesProvider>(context).fetchAndSetMovies(),
+            builder: (ctx, snapshot) => Consumer<MoviesProvider>(
+              builder: (ctx, moviesProvider, child) => PageView.builder(
+                  pageSnapping: true,
+                  onPageChanged: (curIndex) => {
+                        setState(() {
+                          cur = curIndex;
+                        })
+                      },
+                  itemCount: 5,
+                  itemBuilder: (ctx, index) => MovieSliderSingle(
+                      movie: moviesProvider.movies.elementAt(index))),
             ),
           ),
           Positioned(
@@ -42,11 +40,11 @@ class MovieSlider extends StatelessWidget {
             child: Wrap(
               spacing: 10,
               children: [
-                positionIndicatorBuilder(false),
-                positionIndicatorBuilder(true),
-                positionIndicatorBuilder(false),
-                positionIndicatorBuilder(false),
-                positionIndicatorBuilder(false),
+                positionIndicatorBuilder(cur == 0),
+                positionIndicatorBuilder(cur == 1),
+                positionIndicatorBuilder(cur == 2),
+                positionIndicatorBuilder(cur == 3),
+                positionIndicatorBuilder(cur == 4),
               ],
             ),
           )
@@ -57,11 +55,15 @@ class MovieSlider extends StatelessWidget {
 }
 
 Widget positionIndicatorBuilder(bool isActive) {
-  return Container(
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 300),
     height: 5,
     width: isActive ? 12 : 5,
     decoration: const BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.all(Radius.circular(2))),
+      color: Colors.grey,
+      borderRadius: BorderRadius.all(
+        Radius.circular(2),
+      ),
+    ),
   );
 }

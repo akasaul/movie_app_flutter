@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'movie_card.dart';
 import '../models/movie.dart';
+import '../providers/movies_provider.dart';
 
 class MovieGrid extends StatelessWidget {
   final String sectionTitle;
@@ -10,11 +12,11 @@ class MovieGrid extends StatelessWidget {
     required this.sectionTitle,
   });
 
-  final movies = [
-    Movie(duration: '2:01', title: 'Title', rating: 8.8),
-    Movie(duration: '2:01', title: 'Title', rating: 8.8),
-    Movie(duration: '2:01', title: 'Title', rating: 8.8),
-  ];
+  // final movies = [
+  //   Movie(duration: '2:01', title: 'Title', rating: 8.8),
+  //   Movie(duration: '2:01', title: 'Title', rating: 8.8),
+  //   Movie(duration: '2:01', title: 'Title', rating: 8.8),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,10 @@ class MovieGrid extends StatelessWidget {
               crossAxisCount: 3,
               mainAxisSpacing: 7,
               crossAxisSpacing: 7,
+              // children: Provider.of<MoviesProvider>(context, listen: false)
+              //     .movies
+              //     .map((movie) => MovieCard())
+              //     .toList(),
               children: [
                 MovieCard(),
                 MovieCard(),

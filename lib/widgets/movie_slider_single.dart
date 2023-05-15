@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../models/movie.dart';
 
 class MovieSliderSingle extends StatelessWidget {
-  final String imageUrl;
+  final Movie movie;
 
-  MovieSliderSingle({super.key, required this.imageUrl});
+  MovieSliderSingle({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +12,10 @@ class MovieSliderSingle extends StatelessWidget {
       children: [
         Container(
           height: 300,
-          width: 500,
+          width: double.infinity,
           color: Colors.red,
           child: Image.network(
-            imageUrl,
+            'https://image.tmdb.org/t/p/original/${movie.posterPath}',
             fit: BoxFit.cover,
             loadingBuilder: (ctx, child, chunk) => Container(
               color: Colors.red,
@@ -32,7 +33,7 @@ class MovieSliderSingle extends StatelessWidget {
               horizontal: 10,
               vertical: 5,
             ),
-            height: 50,
+            height: 60,
             // color: const Color.fromARGB(157, 41, 41, 41),
             child: Column(
               children: [
@@ -49,12 +50,14 @@ class MovieSliderSingle extends StatelessWidget {
                     ),
                     Spacer(),
                     Container(
-                      height: 20,
-                      width: 20,
+                      height: 30,
+                      width: 30,
                       child: Icon(Icons.play_arrow),
                       decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                          color: Theme.of(context).colorScheme.secondary,
+                          border: Border.all(
+                              color: Color.fromARGB(255, 80, 79, 79)),
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                     )
                   ],
                 ),
@@ -62,7 +65,7 @@ class MovieSliderSingle extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Avatar 2',
+                      movie.title,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
@@ -79,7 +82,30 @@ class MovieSliderSingle extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
+        //   Positioned(
+        //     top: 20,
+        //     right: 0,
+        //     left: 0,
+        //     bottom: 300,
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Text(
+        //           'BOX',
+        //           style: TextStyle(
+        //             fontSize: 30,
+        //             fontWeight: FontWeight.bold,
+        //             color: Theme.of(context).colorScheme.tertiary,
+        //           ),
+        //         ),
+        //         Icon(
+        //           Icons.movie,
+        //           color: Theme.of(context).colorScheme.tertiary,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
       ],
     );
   }

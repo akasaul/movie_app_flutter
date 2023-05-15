@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './screens/home.dart';
-import 'widgets/movie_grid.dart';
+import './providers/movies_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => MoviesProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +51,12 @@ class MyApp extends StatelessWidget {
                 fontSize: 11,
                 fontWeight: FontWeight.w300,
               ),
+              titleSmall: const TextStyle(
+                color: Colors.grey,
+                letterSpacing: 0.7,
+                fontSize: 11,
+                fontWeight: FontWeight.w300,
+              ),
               titleMedium: const TextStyle(
                 color: Colors.white,
                 letterSpacing: 0.2,
@@ -56,6 +68,7 @@ class MyApp extends StatelessWidget {
           primary: Colors.black,
           secondary: Color(0xff171616),
           background: Colors.black,
+          tertiary: Colors.red,
         ),
         // colorScheme: Theme.of(context).colorScheme.copyWith(
         //       primary: Colors.red,
