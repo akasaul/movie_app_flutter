@@ -30,6 +30,12 @@ class _HomeState extends State<Home> {
             setState(() {
               page = index;
             })
+            // if (index == 0)
+            //   {Navigator.of(context).pushNamed(HomePage.routeName)}
+            // else if (index == 1)
+            //   {Navigator.of(context).pushNamed(Filters.routeName)}
+            // else if (index == 2)
+            //   {Navigator.of(context).pushNamed(Me.routeName)}
           },
           currentIndex: page,
           unselectedItemColor: Colors.grey,

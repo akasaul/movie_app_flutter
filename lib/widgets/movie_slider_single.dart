@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
+import '../utils/getGenre.dart';
 
 class MovieSliderSingle extends StatelessWidget {
   final Movie movie;
@@ -8,6 +9,7 @@ class MovieSliderSingle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getMovieGenres(movie.genreIds);
     return Stack(
       children: [
         Container(
@@ -40,7 +42,7 @@ class MovieSliderSingle extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Fantasy',
+                      getMovieGenre(movie.genreIds[0]),
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     SizedBox(width: 15),

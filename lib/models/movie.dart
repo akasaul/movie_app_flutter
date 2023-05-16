@@ -4,6 +4,7 @@ class Movie {
   final String rating;
   final int id;
   final List genreIds;
+  bool isMovie = true;
 
   Movie({
     required this.title,
@@ -11,6 +12,7 @@ class Movie {
     required this.genreIds,
     required this.rating,
     required this.posterPath,
+    this.isMovie = true,
   });
 }
 

@@ -35,4 +35,12 @@ class MoviesProvider with ChangeNotifier {
 
     return trendingMovies as List<Movie>;
   }
+
+  Future<List<Movie?>> search(String query) async {
+    final searchResult = await _movieRepo.search(query);
+    if (searchResult != null && searchResult.length > 0) {
+      return searchResult as List<Movie>;
+    }
+    return [];
+  }
 }

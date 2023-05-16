@@ -7,6 +7,8 @@ import '../widgets/search_bar.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  static String routeName = 'movies';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

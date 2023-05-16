@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './screens/home.dart';
 import './providers/movies_provider.dart';
+import './screens/home.dart';
+import './screens/filters.dart';
+import './screens/me.dart';
 
 void main() {
   runApp(
@@ -75,6 +77,10 @@ class MyApp extends StatelessWidget {
         //     ),
       ),
       home: Home(title: 'home'),
+      routes: {
+        Filters.routeName: (ctx) => Filters(),
+        Me.routeName: (ctx) => Me(),
+      },
     );
   }
 }

@@ -27,16 +27,29 @@ class _MovieSliderState extends State<MovieSlider> {
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(color: Colors.amber),
                       )
-                    : CarouselSlider(
-                        options: CarouselOptions(
-                          height: 350.0,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                        ),
-                        items: snapshot.data!.sublist(0, 5).map((movie) {
-                          return MovieSliderSingle(movie: movie);
-                        }).toList(),
-                      ),
+                    : snapshot.connectionState == ConnectionState.done &&
+                            snapshot.error == null
+                        ? CarouselSlider(
+                            options: CarouselOptions(
+                              height: 350.0,
+                              autoPlay: true,
+                              enlargeCenterPage: true,
+                            ),
+                            items: snapshot.data?.sublist(0, 5).map((movie) {
+                              return MovieSliderSingle(movie: movie);
+                            }).toList(),
+                          )
+                        : Container(
+                            height: 350.0,
+                            child: Center(
+                              child: Text(
+                                'Error Happed Could not connect',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ),
           ),
         ),
         Positioned(

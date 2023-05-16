@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
-import '../widgets/search_bar.dart';
+import 'package:provider/provider.dart';
+import '../providers/movies_provider.dart';
+import '../models/movie.dart';
+import '../widgets/movie_card.dart';
 
-class Filters extends StatelessWidget {
+class Filters extends StatefulWidget {
   const Filters({super.key});
+
+  static String routeName = 'filters';
+
+  @override
+  State<Filters> createState() => _FiltersState();
+}
+
+class _FiltersState extends State<Filters> {
+  String _query = '';
+  List<Movie> _searchRes = [];
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(120), // Set this height
+        preferredSize: Size.fromHeight(60), // Set this height
         child: Container(
           width: MediaQuery.of(context).size.width - 125,
           padding: const EdgeInsets.all(10),
@@ -23,15 +37,46 @@ class Filters extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Icon(
+              Icon(
                 Icons.search,
                 size: 20,
               ),
-              const SizedBox(width: 10),
-              // Text(
-              //   'Find movies, TV shows and more',
-              //   style: Theme.of(context).textTheme.bodySmall,
-              // ),
+              SizedBox(width: 10),
+              Consumer<MoviesProvider>(
+                builder: (ctx, moviesProvider, child) => Container(
+                  width: 200,
+                  child: TextField(
+                    onChanged: (txt) async {
+                      setState(() {
+                        _query = txt;
+                        _isLoading = true;
+                      });
+                      try {
+                        final res = await moviesProvider.search(txt);
+                        if (res.length > 0) {
+                          setState(() {
+                            _searchRes = res as List<Movie>;
+                          });
+                        }
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      } catch (err) {
+                        print(err);
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+                    },
+                    cursorColor: Colors.white,
+                    decoration: InputDecoration(
+                      hintText: 'Find Movies, TV shows and more',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(bottom: 18),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -39,6 +84,45 @@ class Filters extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: Container(
         color: Theme.of(context).colorScheme.background,
+        child: Column(
+          children: [
+            Container(
+              // color: Colors.red,
+              height: 50,
+              width: double.infinity,
+            ),
+            _isLoading
+                ? Container(
+                    height: 500,
+                    width: double.infinity,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.red,
+                      ),
+                    ),
+                  )
+                : Container(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height - 100),
+                    child: GridView.builder(
+                      itemCount: _searchRes.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 0.55,
+                      ),
+                      itemBuilder: (ctx, index) =>
+                          MovieCard(movie: _searchRes[index]),
+                    ),
+                  )
+
+            // MovieGrid(
+            //     sectionTitle: 'Movies',
+            //     movieList: _searchRes,
+            //   )
+          ],
+        ),
       ),
     );
   }
