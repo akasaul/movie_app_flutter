@@ -17,7 +17,7 @@ class MovieGrid extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
-        constraints: BoxConstraints(maxHeight: 500),
+        constraints: BoxConstraints(maxHeight: 450),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

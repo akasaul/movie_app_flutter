@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nikoflex_movie_app/models/movie.dart';
-import 'package:nikoflex_movie_app/widgets/movie_grid.dart';
-import 'package:nikoflex_movie_app/widgets/moviesSection.dart';
-import 'package:provider/provider.dart';
 import '../widgets/movie_slider.dart';
 import '../widgets/button.dart';
-import '../providers/movies_provider.dart';
+import '../widgets/movies_section.dart';
 
 class Home extends StatelessWidget {
   final String title;
@@ -14,6 +10,38 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        child: BottomNavigationBar(
+          currentIndex: 1,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          selectedItemColor: Color.fromARGB(255, 235, 232, 232),
+          iconSize: 20,
+          unselectedFontSize: 11,
+          selectedFontSize: 11,
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Filter',
+              icon: Icon(
+                Icons.filter,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Me',
+              icon: Icon(
+                Icons.account_box,
+              ),
+            )
+          ],
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
         child: Column(

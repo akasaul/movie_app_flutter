@@ -11,7 +11,7 @@ class MovieSliderSingle extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 300,
+          // height: 300,
           width: double.infinity,
           color: Colors.red,
           child: Image.network(
