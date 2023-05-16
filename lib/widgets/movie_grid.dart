@@ -14,14 +14,13 @@ class MovieGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        constraints: BoxConstraints(maxHeight: 450),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -31,11 +30,15 @@ class MovieGrid extends StatelessWidget {
                 Icon(Icons.expand_less),
               ],
             ),
-            SizedBox(height: 10),
-            Container(
-              height: 400,
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Container(
+              constraints: BoxConstraints(maxHeight: 420),
               child: GridView.count(
-                childAspectRatio: 2 / 3.8,
+                padding: EdgeInsets.all(0),
+                childAspectRatio: 0.52,
                 crossAxisCount: 3,
                 mainAxisSpacing: 7,
                 crossAxisSpacing: 7,
@@ -45,9 +48,9 @@ class MovieGrid extends StatelessWidget {
                         ))
                     .toList(),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

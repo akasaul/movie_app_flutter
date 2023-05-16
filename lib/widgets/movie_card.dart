@@ -51,7 +51,7 @@ class MovieCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 2),
                           Text(
-                            movie.rating,
+                            movie.rating.substring(0, 3),
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

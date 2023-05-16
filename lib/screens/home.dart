@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
-import '../widgets/movie_slider.dart';
-import '../widgets/button.dart';
-import '../widgets/movies_section.dart';
+import '../screens/movies.dart';
+import '../screens/filters.dart';
+import '../screens/me.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   final String title;
   Home({super.key, required this.title});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int page = 0;
+
+  final pages = [
+    HomePage(),
+    Filters(),
+    Me(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +26,12 @@ class Home extends StatelessWidget {
       bottomNavigationBar: SizedBox(
         height: 50,
         child: BottomNavigationBar(
-          currentIndex: 1,
+          onTap: (index) => {
+            setState(() {
+              page = index;
+            })
+          },
+          currentIndex: page,
           unselectedItemColor: Colors.grey,
           backgroundColor: Theme.of(context).colorScheme.surface,
           selectedItemColor: Color.fromARGB(255, 235, 232, 232),
@@ -43,45 +61,7 @@ class Home extends StatelessWidget {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MovieSlider(),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Button(
-                    icon: Icons.history,
-                    title: 'History',
-                    color: Colors.purple,
-                  ),
-                  Button(
-                    icon: Icons.book,
-                    title: 'Bookmark',
-                    color: Theme.of(context).colorScheme.tertiary,
-                  ),
-                  Button(
-                    icon: Icons.search,
-                    title: 'Search',
-                    color: Colors.blue,
-                  ),
-                  Button(
-                    icon: Icons.category,
-                    title: 'Filters',
-                    color: Colors.green,
-                  ),
-                ],
-              ),
-            ),
-            MoviesSection(),
-          ],
-        ),
-      ),
+      body: pages[page],
     );
   }
 }
