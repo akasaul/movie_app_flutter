@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
 import './favIcon.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -29,14 +30,14 @@ class MovieCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: Image.network(
-                    'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        'https://image.tmdb.org/t/p/original/${movie.posterPath}',
                     fit: BoxFit.cover,
-                    loadingBuilder: (ctx, child, chunk) => Container(
+                    progressIndicatorBuilder: (ctx, child, chunk) => Container(
                       color: Colors.red,
-                      child: child,
+                      alignment: Alignment.centerLeft,
                     ),
-                    alignment: Alignment.centerLeft,
                   ),
                 ),
                 Container(

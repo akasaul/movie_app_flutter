@@ -4,6 +4,7 @@ import './providers/movies_provider.dart';
 import './screens/home.dart';
 import './screens/filters.dart';
 import './screens/me.dart';
+import './screens/bookmarks_screen.dart';
 
 void main() {
   runApp(
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Filters.routeName: (ctx) => Filters(),
         Me.routeName: (ctx) => Me(),
+        BookmarksScreen.routeName: (ctx) => BookmarksScreen(),
       },
     );
   }

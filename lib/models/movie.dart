@@ -5,6 +5,7 @@ class Movie {
   final int id;
   final List genreIds;
   bool isTvShow;
+  bool isFav = false;
 
   Movie({
     required this.title,
@@ -13,6 +14,7 @@ class Movie {
     required this.rating,
     required this.posterPath,
     this.isTvShow = false,
+    this.isFav = false,
   });
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
-import '../repository/DB_helper.dart';
 import 'dart:convert';
+import '../services/movie_services.dart';
 
 class FavIcon extends StatefulWidget {
   final Movie movie;
@@ -15,16 +15,20 @@ class FavIcon extends StatefulWidget {
 class _FavIconState extends State<FavIcon> {
   bool isFav = false;
   bool isInit = false;
+  bool isCheckingFav = true;
+  MovieServices _movieServices = MovieServices();
 
   Future<bool> getIsFav() async {
-    return await DBHelper.checkFavorite('favorite_movies', widget.movie.id);
+    return await _movieServices.isFavorite('favorite_movies', widget.movie.id);
   }
 
   @override
   void initState() {
-    getIsFav().then((value) => setState(() {
-          isFav = value;
-        }));
+    getIsFav().then((value) {
+      setState(() {
+        isFav = value;
+      });
+    });
     super.initState();
   }
 
@@ -49,7 +53,7 @@ class _FavIconState extends State<FavIcon> {
         });
         try {
           if (!isFav) {
-            await DBHelper.insert('favorite_movies', {
+            await _movieServices.addToFavorites('favorite_movies', {
               'id': widget.movie.id,
               'title': widget.movie.title,
               'image': widget.movie.posterPath,
@@ -57,7 +61,8 @@ class _FavIconState extends State<FavIcon> {
               'rating': widget.movie.rating,
             });
           } else {
-            await DBHelper.removeData('favorite_movies', widget.movie.id);
+            await _movieServices.removeFromFavorites(
+                'favorite_movies', widget.movie.id);
           }
         } catch (err) {
           print(err);
@@ -65,8 +70,6 @@ class _FavIconState extends State<FavIcon> {
             isFav = !isFav;
           });
         }
-
-        print(await DBHelper.getData('favorite_movies'));
       },
     );
   }
