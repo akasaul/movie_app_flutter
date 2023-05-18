@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class FavoriteMovieCard extends StatelessWidget {
   final String image;
@@ -21,13 +20,14 @@ class FavoriteMovieCard extends StatelessWidget {
       width: double.infinity,
       child: Row(
         children: [
-          CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/original/${image}',
+          Image.network(
+            'https://image.tmdb.org/t/p/original/${image}',
             fit: BoxFit.cover,
-            progressIndicatorBuilder: (ctx, child, chunk) => Container(
+            loadingBuilder: (ctx, child, chunk) => Container(
               color: Colors.red,
-              alignment: Alignment.centerLeft,
+              child: child,
             ),
+            alignment: Alignment.centerLeft,
           ),
           SizedBox(width: 20),
           Column(

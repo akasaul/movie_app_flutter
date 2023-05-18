@@ -48,11 +48,11 @@ class _FavIconState extends State<FavIcon> {
               size: 32,
             ),
       onPressed: () async {
-        setState(() {
-          isFav = !isFav;
-        });
         try {
           if (!isFav) {
+            setState(() {
+              isFav = true;
+            });
             await _movieServices.addToFavorites('favorite_movies', {
               'id': widget.movie.id,
               'title': widget.movie.title,
@@ -61,6 +61,9 @@ class _FavIconState extends State<FavIcon> {
               'rating': widget.movie.rating,
             });
           } else {
+            setState(() {
+              isFav = false;
+            });
             await _movieServices.removeFromFavorites(
                 'favorite_movies', widget.movie.id);
           }

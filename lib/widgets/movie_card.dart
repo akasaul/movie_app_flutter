@@ -29,15 +29,24 @@ class MovieCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // CachedNetworkImage(
+                //     imageUrl:
+                //         'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+                //     fit: BoxFit.cover,
+                //     progressIndicatorBuilder: (ctx, child, chunk) => Container(
+                //       color: Colors.red,
+                //       alignment: Alignment.centerLeft,
+                //     ),
+                //   )
                 Expanded(
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+                  child: Image.network(
+                    'https://image.tmdb.org/t/p/original/${movie.posterPath}',
                     fit: BoxFit.cover,
-                    progressIndicatorBuilder: (ctx, child, chunk) => Container(
+                    loadingBuilder: (ctx, child, chunk) => Container(
                       color: Colors.red,
-                      alignment: Alignment.centerLeft,
+                      child: child,
                     ),
+                    alignment: Alignment.centerLeft,
                   ),
                 ),
                 Container(

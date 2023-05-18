@@ -17,7 +17,7 @@ class MovieGrid extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
@@ -27,18 +27,18 @@ class MovieGrid extends StatelessWidget {
                   sectionTitle,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                Icon(Icons.expand_less),
+                const Icon(Icons.expand_less),
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Container(
-              constraints: BoxConstraints(maxHeight: 350),
+              constraints: const BoxConstraints(maxHeight: 350),
               child: GridView.builder(
                 itemCount: movieList.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 0.52,
                   mainAxisSpacing: 7,
