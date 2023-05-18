@@ -62,7 +62,6 @@ class _FiltersState extends State<Filters> {
                           _isLoading = false;
                         });
                       } catch (err) {
-                        print(err);
                         setState(() {
                           _isLoading = false;
                         });
@@ -92,7 +91,7 @@ class _FiltersState extends State<Filters> {
               width: double.infinity,
             ),
             _isLoading
-                ? Container(
+                ? const SizedBox(
                     height: 500,
                     width: double.infinity,
                     child: Center(
@@ -104,16 +103,20 @@ class _FiltersState extends State<Filters> {
                 : Container(
                     constraints: BoxConstraints(
                         maxHeight: MediaQuery.of(context).size.height - 100),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: GridView.builder(
                       itemCount: _searchRes.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         childAspectRatio: 0.55,
                       ),
-                      itemBuilder: (ctx, index) =>
-                          MovieCard(movie: _searchRes[index]),
+                      itemBuilder: (ctx, index) => MovieCard(
+                        movie: _searchRes[index],
+                        isTv: _searchRes[index].isTvShow,
+                      ),
                     ),
                   )
 

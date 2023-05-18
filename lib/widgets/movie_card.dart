@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
+import './favIcon.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
+  bool isTv;
 
-  const MovieCard({
+  MovieCard({
     super.key,
     required this.movie,
+    this.isTv = false,
   });
 
   @override
@@ -70,14 +73,7 @@ class MovieCard extends StatelessWidget {
             ),
           ),
         ),
-        const Positioned(
-          top: 0,
-          child: Icon(
-            Icons.bookmark_add,
-            color: Colors.black,
-            size: 32,
-          ),
-        )
+        Positioned(top: 0, left: 0, child: FavIcon(movie))
       ],
     );
   }

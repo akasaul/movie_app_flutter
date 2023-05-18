@@ -35,21 +35,19 @@ class MovieGrid extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10),
             child: Container(
-              constraints: BoxConstraints(maxHeight: 420),
-              child: GridView.count(
-                padding: EdgeInsets.all(0),
-                childAspectRatio: 0.52,
-                crossAxisCount: 3,
-                mainAxisSpacing: 7,
-                crossAxisSpacing: 7,
-                children: movieList
-                    .map((movieItem) => MovieCard(
-                          movie: movieItem,
-                        ))
-                    .toList(),
+              constraints: BoxConstraints(maxHeight: 350),
+              child: GridView.builder(
+                itemCount: movieList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.52,
+                  mainAxisSpacing: 7,
+                  crossAxisSpacing: 7,
+                ),
+                itemBuilder: (ctx, index) => MovieCard(movie: movieList[index]),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

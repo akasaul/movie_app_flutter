@@ -28,6 +28,7 @@ class MoviesRepository {
                   genreIds: movie['genre_ids'],
                   rating: movie['vote_average'].toString(),
                   posterPath: movie['poster_path'],
+                  isTvShow: movie['media_type'] == 'tv',
                 ))
             .toList());
       }
@@ -64,18 +65,18 @@ class MoviesRepository {
         //     .map((res) => (res['poster_path']) == null)
         //     .toList());
         return List<Movie>.from(resFormatted['results']
+            .where((movie) => movie['poster_path'] != null)
             .map((movie) => Movie(
                   title: movie['original_title'] ?? movie['name'],
                   id: movie['id'],
                   genreIds: movie['genre_ids'],
                   rating: movie['vote_average'].toString(),
-                  posterPath: movie['poster_path'] ??
-                      'https://img.freepik.com/premium-vector/film-strip-isolated-black-background_305440-552.jpg?w=996',
+                  posterPath:
+                      movie['poster_path'] ?? '/azIEjwxAoGUGYSItZVqJJejtWdR',
                 ))
             .toList());
       }
     } catch (err) {
-      print(err);
       throw Exception('Could not fetch data.');
     }
   }
