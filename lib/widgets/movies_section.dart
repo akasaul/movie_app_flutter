@@ -11,6 +11,7 @@ class MoviesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Consumer<MoviesProvider>(
             builder: (ctx, moviesProvider, child) => FutureBuilder(

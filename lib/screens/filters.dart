@@ -20,6 +20,8 @@ class _FiltersState extends State<Filters> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60), // Set this height
@@ -33,98 +35,109 @@ class _FiltersState extends State<Filters> {
               Radius.circular(20),
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.search,
-                size: 20,
-              ),
-              SizedBox(width: 10),
-              Consumer<MoviesProvider>(
-                builder: (ctx, moviesProvider, child) => Container(
-                  width: 200,
-                  child: TextField(
-                    onChanged: (txt) async {
-                      setState(() {
-                        _query = txt;
-                        _isLoading = true;
-                      });
-                      try {
-                        final res = await moviesProvider.search(txt);
-                        if (res.length > 0) {
+          child: Container(
+            margin: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.search,
+                  size: 24,
+                ),
+                SizedBox(width: 10),
+                Consumer<MoviesProvider>(
+                  builder: (ctx, moviesProvider, child) => Container(
+                    // color: Colors.red,
+                    width: media.width - 150,
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: TextField(
+                        onChanged: (txt) async {
                           setState(() {
-                            _searchRes = res as List<Movie>;
+                            _query = txt;
+                            _isLoading = true;
                           });
-                        }
-                        setState(() {
-                          _isLoading = false;
-                        });
-                      } catch (err) {
-                        setState(() {
-                          _isLoading = false;
-                        });
-                      }
-                    },
-                    cursorColor: Colors.white,
-                    decoration: InputDecoration(
-                      hintText: 'Find Movies, TV shows and more',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(bottom: 18),
+                          try {
+                            final res = await moviesProvider.search(txt);
+                            if (res.length > 0) {
+                              setState(() {
+                                _searchRes = res as List<Movie>;
+                              });
+                            }
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          } catch (err) {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }
+                        },
+                        cursorColor: Colors.white,
+                        decoration: InputDecoration(
+                          hintText: 'Find Movies, TV shows and more',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(bottom: 18),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Column(
-          children: [
-            Container(
-              // color: Colors.red,
-              height: 50,
-              width: double.infinity,
-            ),
-            _isLoading
-                ? const SizedBox(
-                    height: 500,
-                    width: double.infinity,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.red,
+      body: SingleChildScrollView(
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
+          child: Column(
+            children: [
+              Container(
+                // color: Colors.red,
+                height: 50,
+                width: double.infinity,
+              ),
+              _isLoading
+                  ? const SizedBox(
+                      height: 500,
+                      width: double.infinity,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                  )
-                : Container(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height - 100),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: GridView.builder(
-                      itemCount: _searchRes.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 0.55,
+                    )
+                  : Container(
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height - 100),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: GridView.builder(
+                        itemCount: _searchRes.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 0.55,
+                        ),
+                        itemBuilder: (ctx, index) => MovieCard(
+                          movie: _searchRes[index],
+                          isTv: _searchRes[index].isTvShow,
+                        ),
                       ),
-                      itemBuilder: (ctx, index) => MovieCard(
-                        movie: _searchRes[index],
-                        isTv: _searchRes[index].isTvShow,
-                      ),
-                    ),
-                  )
+                    )
 
-            // MovieGrid(
-            //     sectionTitle: 'Movies',
-            //     movieList: _searchRes,
-            //   )
-          ],
+              // MovieGrid(
+              //     sectionTitle: 'Movies',
+              //     movieList: _searchRes,
+              //   )
+            ],
+          ),
         ),
       ),
     );
