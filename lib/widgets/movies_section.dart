@@ -37,7 +37,7 @@ class MoviesSection extends StatelessWidget {
                               height: 350.0,
                               child: Center(
                                 child: Text(
-                                  'Error Happed Could not connect',
+                                  'Error Happened Could not connect',
                                   style: TextStyle(
                                     color: Colors.red,
                                   ),

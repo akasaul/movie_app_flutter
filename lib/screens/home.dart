@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nikoflex_movie_app/screens/bookmarks_screen.dart';
 import '../screens/movies.dart';
 import '../screens/filters.dart';
 import '../screens/me.dart';
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> {
   final pages = [
     HomePage(),
     Filters(),
-    Me(),
+    BookmarksScreen(),
   ];
 
   @override

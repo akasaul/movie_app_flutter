@@ -29,26 +29,26 @@ class MovieCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // CachedNetworkImage(
-                //     imageUrl:
-                //         'https://image.tmdb.org/t/p/original/${movie.posterPath}',
-                //     fit: BoxFit.cover,
-                //     progressIndicatorBuilder: (ctx, child, chunk) => Container(
-                //       color: Colors.red,
-                //       alignment: Alignment.centerLeft,
-                //     ),
-                //   )
                 Expanded(
-                  child: Image.network(
-                    'https://image.tmdb.org/t/p/original/${movie.posterPath}',
-                    fit: BoxFit.cover,
-                    loadingBuilder: (ctx, child, chunk) => Container(
-                      color: Colors.red,
-                      child: child,
-                    ),
+                    child: CachedNetworkImage(
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+                  fit: BoxFit.cover,
+                  progressIndicatorBuilder: (ctx, child, chunk) => Container(
+                    color: Colors.red,
                     alignment: Alignment.centerLeft,
                   ),
-                ),
+                )
+                    // child: Image.network(
+                    //   'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+                    //   fit: BoxFit.cover,
+                    //   loadingBuilder: (ctx, child, chunk) => Container(
+                    //     color: Colors.red,
+                    //     child: child,
+                    //   ),
+                    //   alignment: Alignment.centerLeft,
+                    // ),
+                    ),
                 Container(
                   color: Theme.of(context).colorScheme.secondary,
                   padding: const EdgeInsets.all(8),

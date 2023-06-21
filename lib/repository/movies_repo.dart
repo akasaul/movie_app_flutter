@@ -81,16 +81,3 @@ class MoviesRepository {
     }
   }
 }
-
-// const options = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZGY5ZjEwMzdkN2YzNzhhMWMxYzk0YjY1Y2VhOThkNCIsInN1YiI6IjYzOWFiOTExOGEwZTliMDA4YWY3NTcwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lQkN6XFyQHRrHKj3TI2XDbJ-bnN3FIUhlg56CxJBHXs'
-//   }
-// };
-
-// fetch('https://api.themoviedb.org/3/search/multi?include_adult=false&language=en-US&page=1', options)
-//   .then(response => response.json())
-//   .then(response => console.log(response))
-//   .catch(err => console.error(err));

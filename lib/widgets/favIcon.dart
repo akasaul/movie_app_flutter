@@ -19,7 +19,9 @@ class _FavIconState extends State<FavIcon> {
   MovieServices _movieServices = MovieServices();
 
   Future<bool> getIsFav() async {
-    return await _movieServices.isFavorite('favorite_movies', widget.movie.id);
+    final res =
+        await _movieServices.isFavorite('favorite_movies', widget.movie.id);
+    return res;
   }
 
   @override

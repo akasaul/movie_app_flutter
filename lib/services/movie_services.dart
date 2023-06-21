@@ -18,7 +18,9 @@ class MovieServices {
   }
 
   Future<List<Map<String, dynamic>>> getFavorites(String table) async {
-    return await DBHelper.getData(table);
+    final res = await DBHelper.getData(table);
+    print(res);
+    return res;
   }
 
   Future<bool> isFavorite(String table, int id) async {
