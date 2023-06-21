@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
 import '../utils/getGenre.dart';
@@ -16,15 +17,23 @@ class MovieSliderSingle extends StatelessWidget {
           // height: 300,
           width: double.infinity,
           color: Colors.red,
-          child: Image.network(
-            'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+          child: CachedNetworkImage(
+            imageUrl: 'https://image.tmdb.org/t/p/original/${movie.posterPath}',
             fit: BoxFit.cover,
-            loadingBuilder: (ctx, child, chunk) => Container(
+            progressIndicatorBuilder: (ctx, child, chunk) => Container(
               color: Colors.red,
-              child: child,
+              alignment: Alignment.centerLeft,
             ),
-            alignment: Alignment.centerLeft,
           ),
+          // child: Image.network(
+          //   'https://image.tmdb.org/t/p/original/${movie.posterPath}',
+          //   fit: BoxFit.cover,
+          //   loadingBuilder: (ctx, child, chunk) => Container(
+          //     color: Colors.red,
+          //     child: child,
+          //   ),
+          //   alignment: Alignment.centerLeft,
+          // ),
         ),
         Positioned(
           bottom: 0,

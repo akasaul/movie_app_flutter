@@ -36,17 +36,18 @@ class _FavIconState extends State<FavIcon> {
 
   @override
   Widget build(BuildContext context) {
+    print(isFav);
     return IconButton(
       splashRadius: 10,
       icon: isFav
           ? Icon(
-              Icons.bookmark_added,
-              color: Theme.of(context).colorScheme.tertiary,
+              Icons.bookmark,
+              color: Colors.black,
               size: 32,
             )
           : Icon(
-              Icons.bookmark,
-              color: Colors.black,
+              Icons.bookmark_added,
+              color: Theme.of(context).colorScheme.tertiary,
               size: 32,
             ),
       onPressed: () async {

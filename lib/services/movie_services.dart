@@ -4,6 +4,7 @@ class MovieServices {
   Future<void> addToFavorites(String table, Map<String, Object> data) async {
     try {
       await DBHelper.insert(table, data);
+      print(await DBHelper.getData(table));
     } catch (err) {
       print(err);
     }

@@ -8,7 +8,7 @@ class BookmarksScreen extends StatelessWidget {
 
   static const routeName = 'bookmarks';
 
-  MovieServices _movieServices = MovieServices();
+  final MovieServices _movieServices = MovieServices();
 
   @override
   Widget build(BuildContext context) {
